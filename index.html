@@ -6,6 +6,7 @@
     
     <meta name="google-site-verification" content="xzkheGRMivderCUCnHm9B8_Z2FEEcHmpLd70ckO_oAA" /> 
     
+    <link rel="canonical" href="https://base64.beekayutil.com/" />
     <link rel="alternate" hreflang="ko" href="https://base64.beekayutil.com/" />
     <link rel="alternate" hreflang="en" href="https://base64.beekayutil.com/en" />
     
@@ -128,7 +129,7 @@
             color: #888;
         }
 
-        /* SEO 정보 섹션 (Info-Section) */
+        /* SEO 정보 섹션 */
         .info-section {
             margin-top: 40px;
             padding: 20px; 
@@ -144,7 +145,7 @@
         .info-section dd { margin-left: 0; padding: 5px 0 10px 10px; border-bottom: 1px dotted var(--light-border); }
         .disclaimer small { font-size: 0.8em; color: #777; }
 
-        /* Footer 역할을 하는 div 스타일 */
+        /* Footer 스타일 */
         .content-footer-area {
             margin: 0 auto;
             width: 100%;
@@ -162,8 +163,13 @@
             text-decoration: none;
             margin: 0 5px;
         }
+        .footer-legal {
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9em;
+        }
         
-        /* 반응형 디자인 */
         @media (max-width: 768px) {
             .io-section {
                 flex-direction: column;
@@ -199,7 +205,7 @@
             <div class="controls">
                 <button id="encodeBtn">Base64 인코딩</button>
                 <button id="decodeBtn">Base64 디코딩</button>
-                <button id="clearBtn">초기화</button>
+                <button id="clearBtn" style="background-color: #7f8c8d;">초기화</button>
             </div>
             
             <div id="message"></div>
@@ -230,24 +236,25 @@
 
         <section class="info-section">
             <h2 id="principle">💡 Base64의 작동 원리와 용도</h2>
+            
             <p>
-                Base64는 8비트 이진 데이터를 64진법의 아스키(ASCII) 문자열로 변환하는 인코딩 방식입니다. 데이터를 안전하게 전송하거나, URL, XML, JSON 등 텍스트 기반 환경에 이진 데이터를 포함시키기 위해 주로 사용됩니다. 이는 암호화가 아닌, 데이터 무결성을 위한 변환 방식입니다.
+                Base64는 이진 데이터를 텍스트 기반 환경에서 안전하게 전송하기 위한 인코딩 방식입니다. 이는 암호화가 아니며, 데이터 전송 시 무결성을 유지하는 데 목적이 있습니다.
             </p>
             
             <h2 id="faq">🛠️ 인코딩/디코딩 핵심 설명</h2>
             <dl>
                 <dt>인코딩 (Encoding)</dt>
-                <dd>텍스트를 Base64 문자열로 변환합니다. 모든 바이트가 텍스트 환경에서 안전하게 처리될 수 있도록 보장합니다.</dd>
+                <dd>텍스트를 ASCII 문자열로 변환하여 시스템 간 데이터 왜곡 없이 전송되도록 합니다.</dd>
                 
                 <dt>디코딩 (Decoding)</dt>
-                <dd>Base64 문자열을 원래의 텍스트 데이터로 복원합니다. 복원 시 원본 데이터와 100% 동일하게 복구됩니다.</dd>
+                <dd>변환된 Base64 문자열을 원래의 데이터로 정밀하게 복원합니다.</dd>
 
-                <dt>사용 용도</dt>
-                <dd>이메일(MIME), 이미지 데이터(Data URI), 웹 토큰(JWT) 등에서 이진 데이터를 문자열로 다루기 위해 필수적으로 사용됩니다.</dd>
+                <dt>주요 용도</dt>
+                <dd>이메일 첨부파일 전송, Data URI를 이용한 이미지 임베딩, JWT(JSON Web Token) 등에 널리 사용됩니다.</dd>
             </dl>
             
             <p class="disclaimer">
-                <small>면책 고지: Base64는 암호화 기술이 아닙니다. 중요한 비밀번호나 기밀 정보를 보호하려면 반드시 SSL/TLS 및 추가 암호화를 사용해야 합니다.</small>
+                <small>면책 고지: Base64는 보안을 위한 암호화가 아닙니다. 민감한 정보는 별도의 암호화 처리가 필요합니다.</small>
             </p>
         </section>
 
@@ -265,9 +272,14 @@
         
         <div class="content-footer-area">
             <p>&copy; 2024 beekayutil.com</p>
-            <p>
+            <div class="footer-legal">
+                <a href="https://beekayutil.com/privacy">개인정보처리방침</a> | 
+                <a href="https://beekayutil.com/terms">이용 약관</a> | 
+                <a href="https://beekayutil.com/contact">문의</a>
+            </div>
+            <p style="margin-top:10px;">
                 <a href="https://beekayutil.com" target="_blank">SEO 분석기</a> | 
-                <a href="https://base64.beekayutil.com" target="_blank">Base64 변환기</a> | 
+                <a href="https://base64.beekayutil.com">Base64 변환기</a> | 
                 <a href="https://json.beekayutil.com" target="_blank">JSON 변환기</a> |
                 <a href="https://compound.beekayutil.com" target="_blank">복리 계산기</a> |
                 <a href="https://labor.beekayutil.com" target="_blank">근로시간 계산기</a>
@@ -298,11 +310,9 @@
             try {
                 let result = '';
                 if (type === 'encode') {
-                    // 텍스트를 Base64로 인코딩
                     result = btoa(unescape(encodeURIComponent(inputText)));
                     showMessage('✅ Base64 인코딩 완료.', 'success');
                 } else if (type === 'decode') {
-                    // Base64를 텍스트로 디코딩
                     result = decodeURIComponent(escape(atob(inputText)));
                     showMessage('✅ Base64 디코딩 완료.', 'success');
                 }
@@ -315,7 +325,7 @@
 
         function showMessage(text, type) {
             messageEl.textContent = text;
-            messageEl.className = type; // success 또는 error 클래스 적용
+            messageEl.className = type;
             messageEl.style.display = 'block';
         }
 
